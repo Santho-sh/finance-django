@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+    <table>
+        <thead>
+            <tr>
+                <th class="text-start">Symbol</th>
+                <th class="text-start">Name</th>
+                <th class="text-middle">Shares</th>
+                <th class="text-middle">Buy or Sell</th>
+                <th class="text-end">Price</th>
+                <th class="text-end">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through the database entries to display them in this table -->
+        {% for stock in stocks %}
+        <tr>
+            <td class="text-start">{{stock.name}}</td>
+            <td class="text-start">{{stock.symbol}}</td>
+            <td class="text-middle">{{stock.shares}}</td>
+            <td class="form">
+                <form action="/buy" method="POST">
+                    <input name="buy_symbol" value="{{stock.symbol}}" hidden>
+                    <button class="btn btn-primary" type="submit">Buy</button>
+                </form>
+                <form action="/sell" method="POST">
+                    <input name="sell_symbol" value="{{stock.symbol}}" hidden>
+                    <button class="btn btn-primary" type="submit">Sell</button>
+                </form>
+            </td>
+            <td class="text-end">{{"$%.2f"|format(stock.price)}}</td>
+            <td class="text-end">{{"$%.2f"|format(stock.total)}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot >
+            <tr class="tfoot">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="border-0 fw-bold text-end" colespan="4">Cash</td>
+                <td class="border-0 text-end">{{"$%.2f"|format(cash)}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="border-0 fw-bold text-end">TOTAL</td>
+                <td class="border-0 text-end">{{"$%.2f"|format(total + cash)}}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

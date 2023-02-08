@@ -3,4 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(response):
-    return render('finance/index.html')
+    return render(response, 'finance/index.html')
+
+def login(response):
+    return render(response, 'finance/login.html')
