@@ -20,38 +20,41 @@ def register(response):
             user = form.save()
             login(response, user)
             messages.success(response, "Registration successful.")
-            return redirect('finance:home')
+            return redirect('/home')
         
         else:
             messages.error(response, "Unsuccessful registration. Invalid information.")
-            return redirect('/login')
     else:
         form = RegisterForm()
-    return render(response, 'finance/register.html', {'form': form})
+        return render(response, 'finance/register.html', {'form': form})
 
 
-def login_request(response):
+# def login_request(response):
     
-    if response.method == 'POST':
-        form = AuthenticationForm(response.POST)
-        if form.is_valid():
-            username = form.cleaned_data('username')
-            password = form.changed_data('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(response, user)
-                messages.info(response, f"You are now logged in as {username}.")
-                return redirect('finance:home')
-            else:
-                messages.error(response,"Invalid username or password.")
-        else:    
-            messages.error(response,"Invalid username or password.")
-    else:
-        form = AuthenticationForm()    
-        return render(response, 'registration/login.html', {'form':form})
+    # if response.method == 'POST':
+    #     form = AuthenticationForm(response.POST)
+    #     form.is_valid()
+    #     username = form.cleaned_data.get('username')
+    #     password = form.cleaned_data.get('password')
+        
+    #     print(username, password)
+    #     # if form.is_valid():
+            
+    #     #     user = authenticate(username=username, password=password)
+    #     #     if user is not None:
+    #     #         login(response, user)
+    #     #         messages.info(response, f"You are now logged in as {username}.")
+    #     #         return redirect('finance:home')
+    #     #     else:
+    #     #         messages.error(response,"Invalid username or password.")
+    #     # else:    
+    #     #     messages.error(response,"Invalid username or password.")
+    # else:
+    # form = AuthenticationForm()    
+    # return render(response, 'registration/login.html', {'form':form})
 
 
 def logout_request(response):
     logout(response)
     messages.info(response, "You have successfully logged out.")
-    return redirect("finance:homepage")
+    return redirect("finance:home")
