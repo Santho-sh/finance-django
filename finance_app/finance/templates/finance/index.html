@@ -4,7 +4,9 @@
     Homepage
 {% endblock %}
 
+
 {% block main %}
+    {% if user.is_authenticated %}
     <table>
         <thead>
             <tr>
@@ -57,4 +59,10 @@
             </tr>
         </tfoot>
     </table>
+
+    {% else %}          
+    <h3>Welcome To Finance</h3>
+    <p>Log in <a href='/login'>Here</a> </p>
+    {% endif %}
+    
 {% endblock %}

@@ -39,7 +39,7 @@
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/change">Change Password</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
+                            <li class="nav-item"><a class="nav-link" href='/logout'>Log Out</a></li>
                         </ul>
                     {% else %}
                         <ul class="navbar-nav ms-auto mt-2">
@@ -60,7 +60,8 @@
         {% endif %} {% endcomment %}
 
         <main class="container-fluid py-5 text-center">
-            {% block main %}{% endblock %}
+            {% block main %}
+            {% endblock %}
         </main>
 
         <footer class="mb-5 small text-center text-muted">
