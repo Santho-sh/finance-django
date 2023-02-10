@@ -1,0 +1,15 @@
+{% extends "finance/layout.html" %}
+
+{% block title %}
+    Log Out
+{% endblock %}
+
+{% block main %}
+
+    <form>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary"><a href='/login'>Log In Again</a></button>
+    </form>
+
+{% endblock %}
