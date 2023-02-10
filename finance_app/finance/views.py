@@ -11,12 +11,12 @@ def index(response):
         stocks = Stocks.objects.all()
         return render(response, 'finance/index.html', {'stocks':stocks})
     else:
-        return redirect('login/')
+        return redirect('/login')
 
 def register(response):
     if response.method == 'POST':
         form = RegisterForm(response.POST)
-        
+        print(form)
         if form.is_valid():
             user = form.save()
             login(response, user)

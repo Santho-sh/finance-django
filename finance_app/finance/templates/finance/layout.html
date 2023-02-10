@@ -29,7 +29,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
-                    {% comment %} {% if session["user_id"] %} {% endcomment %}
+                    {% if user.is_authenticated %}
                         <ul class="navbar-nav me-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
                             <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
@@ -39,14 +39,14 @@
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/change">Change Password</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
                         </ul>
-                    {% comment %} {% else %}
+                    {% else %}
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
                         </ul>
-                    {% endif %} {% endcomment %}
+                    {% endif %}
                 </div>
             </div>
         </nav>
