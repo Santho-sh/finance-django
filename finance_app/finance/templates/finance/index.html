@@ -6,7 +6,10 @@
 
 
 {% block main %}
+
     {% if user.is_authenticated %}
+    <h2>Welcome {{user.username}}</h2>
+    <br>
     <table>
         <thead>
             <tr>
@@ -22,8 +25,8 @@
             <!-- Loop through the database entries to display them in this table -->
         {% for stock in stocks %}
         <tr>
-            <td class="text-start">{{stock.name}}</td>
             <td class="text-start">{{stock.symbol}}</td>
+            <td class="text-start">{{stock.company}}</td>
             <td class="text-middle">{{stock.shares}}</td>
             <td class="form">
                 <form action="/buy" method="POST">
