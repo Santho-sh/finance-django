@@ -6,3 +6,8 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
+
+class BuyForm(forms.Form):
+    symbol = forms.CharField(max_length=15)
+    shares = forms.IntegerField()
+    

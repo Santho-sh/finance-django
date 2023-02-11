@@ -23,25 +23,35 @@
         </thead>
         <tbody>
             <!-- Loop through the database entries to display them in this table -->
-        {% for stock in stocks %}
-        <tr>
-            <td class="text-start">{{stock.symbol}}</td>
-            <td class="text-start">{{stock.company}}</td>
-            <td class="text-middle">{{stock.shares}}</td>
-            <td class="form">
-                <form action="/buy" method="POST">
-                    <input name="buy_symbol" value="{{stock.symbol}}" hidden>
-                    <button class="btn btn-primary" type="submit">Buy</button>
-                </form>
-                <form action="/sell" method="POST">
-                    <input name="sell_symbol" value="{{stock.symbol}}" hidden>
-                    <button class="btn btn-primary" type="submit">Sell</button>
-                </form>
-            </td>
-            <td class="text-end">{{ stock.price }}</td>
-            <td class="text-end">{{ stock.total }}</td>
-        </tr>
-        {% endfor %}
+        {% if stocks is not None %}
+            {% for stock in stocks %}
+            <tr>
+                <td class="text-start">{{stock.symbol}}</td>
+                <td class="text-start">{{stock.company}}</td>
+                <td class="text-middle">{{stock.shares}}</td>
+                <td class="form">
+                    <form action="/buy" method="POST">
+                        <input name="buy_symbol" value="{{stock.symbol}}" hidden>
+                        <button class="btn btn-primary" type="submit">Buy</button>
+                    </form>
+                    <form action="/sell" method="POST">
+                        <input name="sell_symbol" value="{{stock.symbol}}" hidden>
+                        <button class="btn btn-primary" type="submit">Sell</button>
+                    </form>
+                </td>
+                <td class="text-end">{{ stock.price }}</td>
+                <td class="text-end">{{ stock.total }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <form action="/buy">
+                <h1>Welcome To Finance</h1>
+                <br>
+                <div class="text-bg-success p-3">Balance: ${{cash}}</div>
+                <br>
+                <button class="btn btn-primary" type="submit">Buy Stocks Now</button>
+            </form> 
+        {% endif %}
         </tbody>
         <tfoot >
             <tr class="tfoot">

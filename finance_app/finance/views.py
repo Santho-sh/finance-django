@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegisterForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Person, Stocks
+from .forms import RegisterForm, BuyForm
 
 
 def index(response):
@@ -64,3 +64,15 @@ def login_request(response):
 def logout_request(response):
     logout(response)
     return redirect("/")
+
+
+def buy(response):
+    if response.method == 'POST':
+        form = BuyForm(response.POST)
+        if form.is_valid():
+            symbol = form.cleaned_data.get('symbol')
+            symbol = form.cleaned_data.get('shares')
+    else:
+        form = BuyForm()
+        return render(response, "finance/buy.html", {'form':form})
+
