@@ -20,10 +20,13 @@ def register(response):
         
         if form.is_valid():
             user = form.save()
-            
-            Person.objects.create(name=response.user.username, balance=10000.0)
-            
             login(response, user)
+            
+            name = response.user.username
+            id = response.user.id
+            print(name, id)
+            Person.objects.create(user_id=user, name=name.title(), balance=10000.0)
+            
             messages.success(response, "Registration successful." )
                   
             return redirect('/')
