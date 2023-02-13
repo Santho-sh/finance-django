@@ -8,6 +8,9 @@ class RegisterForm(UserCreationForm):
         fields = ('username', 'password1', 'password2')
 
 class BuyForm(forms.Form):
-    symbol = forms.CharField(max_length=15)
+    symbol = forms.CharField(label='Symbol', max_length=15)
     shares = forms.IntegerField()
     
+class SellForm(forms.Form):
+    symbol = forms.CharField(label='Symbol', max_length=15)
+    shares = forms.IntegerField()

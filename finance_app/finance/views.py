@@ -4,13 +4,24 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Person, Stocks
 from .forms import RegisterForm, BuyForm
-from .helpers import lookup
+from .helpers import lookup, usd
 
 def index(response):
     
-    stocks = Stocks.objects.filter(user_id=response.user.id)
-
-    return render(response, 'finance/index.html', {'stocks':stocks})
+    stocks = Stocks.objects.filter(user_id=response.user.id).values()
+    
+    total = 0
+    
+    for i in range(len(stocks)):
+        total += stocks[i]['total']
+    
+    user = Person.objects.filter(user_id=response.user.id).values('balance')
+                
+    balance = user[0]['balance']
+    
+    total += balance
+    
+    return render(response, 'finance/index.html', {'stocks':stocks, 'balance':balance, 'total':total})
 
 def register(response):
     
@@ -73,19 +84,37 @@ def buy(response):
             symbol = form.cleaned_data.get('symbol')
             shares = form.cleaned_data.get('shares')
             quote = lookup(symbol)
-            if quote != None:
-                balance = ...
+            
+            if quote != None or shares < 1:
+                
+                user = Person.objects.filter(user_id=response.user.id).values('balance')
+                
+                balance = user[0]['balance']
+                print()
+                
                 price = quote['price']
                 name = quote['name']
-                
                 total_price = price * shares
                 
-                print(price, name, total_price)
-                
-                return redirect('/buy')
+                if total_price < balance:
+                    ...
+                else:
+                    return redirect('/buy')
             else:
                 return redirect('/buy')
     else:
         form = BuyForm()
         return render(response, "finance/buy.html", {'form':form})
 
+
+def sell(response):
+    if response.method == 'POST':
+        form = response.POST
+        if form.is_valid():
+            symbol = form.cleaned_data.get('symbol')
+            stocks = form.cleaned_data.get('stocks')
+            print(symbol, stocks)
+    else:
+        stocks = Stocks.objects.filter(user_id=response.user.id).values()
+
+    return render(response, 'finance/sell.html', {'stocks': stocks})

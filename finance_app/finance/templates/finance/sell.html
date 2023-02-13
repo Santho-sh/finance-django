@@ -1,19 +1,21 @@
-{% extends "layout.html" %}
+{% extends "finance/layout.html" %}
 
 {% block title %}
     Sell
 {% endblock %}
 
 {% block main %}
-    <form action="/sell" method="post">
+  
+    <form action="/sell" method="POST">
+      {% csrf_token %}
       <div class="mb-3">
         <select class="form-select mx-auto w-auto" name="symbol">
           <option>Symbol</option>
-          {% for symbol in symbols %}
-            {% if sell_symbol == symbol.symbol %}
-                <option name="symbol" selected="" value="{{symbol.symbol}}">{{symbol.symbol}}</option>
+          {% for stock in stocks %}
+            {% if sell_symbol == stock.symbol %}
+                <option name="symbol" selected="" value="{{stock.symbol}}">{{stock.symbol}}</option>
             {% else %}
-                <option name="symbol" value="{{symbol.symbol}}">{{symbol.symbol}}</option>
+                <option name="symbol" value="{{stock.symbol}}">{{stock.symbol}}</option>
             {% endif %}
           {% endfor %}
       </select>
