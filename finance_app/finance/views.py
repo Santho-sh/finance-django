@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
 from .models import Person, Stocks
 from .forms import RegisterForm, BuyForm, QuoteForm, AddCashForm
 from .helpers import lookup, usd
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 def index(response):
     
@@ -75,6 +78,15 @@ def login_request(response):
 def logout_request(response):
     logout(response)
     return redirect("/")
+
+
+def password_change_request(response):
+    User = get_user_model()
+    if response.method == 'POST':
+        ...
+    form = PasswordChangeForm(user=User)
+    return render(response, 'registration/password_change.html', {'form':form})
+    
 
 
 def buy(response):
@@ -148,6 +160,6 @@ def add(response):
             print(cash)
         else:
             return redirect('/add')
-    else:
+    else: 
         form = AddCashForm()
     return render(response, 'finance/add.html', {'form': form})
