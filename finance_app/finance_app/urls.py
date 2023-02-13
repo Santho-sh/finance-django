@@ -23,6 +23,6 @@ urlpatterns = [
     path('buy/', include('finance.urls')),
     path('sell/', include('finance.urls')),
     path('quote/', include('finance.urls')),
-    path('quoted/', include('finance.urls')),
+    path('add/', include('finance.urls')),
     path('admin/', admin.site.urls),
 ]

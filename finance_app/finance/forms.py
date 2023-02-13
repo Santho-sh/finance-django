@@ -13,3 +13,5 @@ class BuyForm(forms.Form):
     
 class QuoteForm(forms.Form):
     symbol = forms.CharField(label='Symbol', max_length=15)
+class AddCashForm(forms.Form):
+    cash = forms.IntegerField()

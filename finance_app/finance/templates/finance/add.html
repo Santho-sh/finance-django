@@ -5,10 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/add" method="post">
-      <div class="mb-3">
-          <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="cash" placeholder="Cash (1 to 10000)" type="number">
-      </div>
+    <form action="/add" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
       <button class="btn btn-primary" type="submit">Add Cash</button>
     </form>
 {% endblock %}
