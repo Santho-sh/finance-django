@@ -11,6 +11,5 @@ class BuyForm(forms.Form):
     symbol = forms.CharField(label='Symbol', max_length=15)
     shares = forms.IntegerField()
     
-class SellForm(forms.Form):
+class QuoteForm(forms.Form):
     symbol = forms.CharField(label='Symbol', max_length=15)
-    shares = forms.IntegerField()

@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "finance/layout.html" %}
 
 {% block title %}
     Quoted
@@ -7,7 +7,8 @@
 {% block main %}
 
     <form action="/buy">
-        <h5>A share of {{name}} Inc ({{symbol}}) costs {{"$%.2f"|format(price)}}.</h5>
+        {% csrf_token %}
+        <h5>A share of {{name}} Inc ({{symbol}}) costs {{price}}.</h5>
         <br>
         <button class="btn btn-primary" type="submit">Buy Stocks Now</button>
     </form>

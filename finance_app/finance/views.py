@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Person, Stocks
-from .forms import RegisterForm, BuyForm
+from .forms import RegisterForm, BuyForm, QuoteForm
 from .helpers import lookup, usd
 
 def index(response):
@@ -118,3 +118,24 @@ def sell(response):
         stocks = Stocks.objects.filter(user_id=response.user.id).values()
 
     return render(response, 'finance/sell.html', {'stocks': stocks})
+
+def quote(response):
+    if response.method == 'POST':
+        form = QuoteForm(response.POST)
+        
+        if form.is_valid():
+            
+            symbol = form.cleaned_data.get('symbol')
+            data = lookup(symbol)
+            if data != None:
+                
+                price = data['price']
+                name = data['name']
+                context = {'name':name, 'price':price, 'symbol':symbol}
+                return render(response, 'finance/quoted.html', context)
+            
+            else:
+                return redirect('/quote')
+    else:
+        form = QuoteForm()
+        return render(response, 'finance/quote.html', {'form':form})
