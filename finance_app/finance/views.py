@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Person, Stocks
 from .forms import RegisterForm, BuyForm
-
+from .helpers import lookup
 
 def index(response):
     
@@ -71,7 +71,20 @@ def buy(response):
         form = BuyForm(response.POST)
         if form.is_valid():
             symbol = form.cleaned_data.get('symbol')
-            symbol = form.cleaned_data.get('shares')
+            shares = form.cleaned_data.get('shares')
+            quote = lookup(symbol)
+            if quote != None:
+                balance = ...
+                price = quote['price']
+                name = quote['name']
+                
+                total_price = price * shares
+                
+                print(price, name, total_price)
+                
+                return redirect('/buy')
+            else:
+                return redirect('/buy')
     else:
         form = BuyForm()
         return render(response, "finance/buy.html", {'form':form})
